@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/aop
+                            http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--开启注解扫描-->
+    <context:component-scan base-package="com.gabriel"></context:component-scan>
+
+    <!--增强内容交给spring管理-->
+    <bean id="myAspect" class="com.gabriel.aspect.MyAspect"></bean>
+    <!--配置aspect相关参数-->
+    <aop:config>
+        <!--配置切入点，要将切面切入到哪些位置中
+            id表示唯一标识，expression表示切入位置，在哪里进行切入-->
+        <aop:pointcut id="mypc" expression="execution(* com.gabriel.service..*.*(..))"/>
+        <!--配置切面-->
+        <aop:aspect ref="myAspect">
+            <!--指定织入的方法和位置，在核心组件之前-->
+            <aop:before method="before" pointcut-ref="mypc"></aop:before>
+            <!--指定织入的方法和位置，在核心组件之后-->
+            <aop:after method="after" pointcut-ref="mypc"></aop:after>
+
+        </aop:aspect>
+    </aop:config>
+
+</beans>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="date" class="java.text.SimpleDateFormat">
+        <constructor-arg name="pattern" value="yyy-MM-dd"></constructor-arg>
+    </bean>
+
+    <bean id="car1" class="com.gabriel.pojo.Car">
+        <property name="brand" value="宝马"></property>
+        <property name="id" value="1010"></property>
+        <property name="color" value="蓝色"></property>
+        <property name="price" value="203888.99"></property>
+        <property name="buyDay">
+            <bean factory-bean="date" factory-method="parse">
+                <constructor-arg value="2021-10-20"></constructor-arg>
+            </bean>
+        </property>
+        <property name="list">
+            <list>
+                <value>张三</value>
+                <value>李四</value>
+                <value>王五</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="car2" class="com.gabriel.pojo.Car">
+        <constructor-arg name="brand" value="奔驰"></constructor-arg>
+        <constructor-arg name="id" value="1020"></constructor-arg>
+        <constructor-arg name="color" value="白色"></constructor-arg>
+        <constructor-arg name="price" value="214617.90"></constructor-arg>
+        <constructor-arg name="buyDay">
+            <bean factory-bean="date" factory-method="parse">
+                <constructor-arg value="2021-10-01"></constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="list">
+            <list>
+                <value>郑</value>
+                <value>李</value>
+                <value>张</value>
+            </list>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="list" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <value>小贾</value>
+                <value>小郑</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="carList" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="car1"></ref>
+                <ref bean="car2"></ref>
+                <ref bean="car3"></ref>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="car3" class="com.gabriel.pojo.Car" p:brand="保时捷" p:id="1030" p:color="红色" p:buyDay="#{date.parse('2021-10-01')}" p:price="#{car2.price*2}" p:list-ref="list"></bean>
+
+    <bean id="carDao" class="com.gabriel.dao.CarDao"></bean>
+
+    <bean id="carService" class="com.gabriel.service.CarService">
+        <constructor-arg name="carList" ref="carList"></constructor-arg>
+        <constructor-arg name="carDao" ref="carDao"></constructor-arg>
+    </bean>
+
+    <bean class="com.gabriel.myBeanPostProcessor.MyBeanPostProcessor"></bean>
+</beans>

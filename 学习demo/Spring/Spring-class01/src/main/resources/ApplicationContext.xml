@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--spring ioc配置    -->
+    <!--创建bean，将对象交给spring管理-->
+<!--id:bean对象的唯一标识
+    name：作用与id差不多，id和name二选一
+    class：需要管理创建对象类的全路径
+-->
+    <bean id="userDao" class="com.gabriel.dao.UserDao"></bean>
+
+    <!--DI依赖注入-->
+    <bean id="userService" class="com.gabriel.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"></property>
+    </bean>
+
+    <!--属性注入-->
+    <bean id="user" class="com.gabriel.entity.User">
+        <property name="id" value="101"></property>
+        <property name="name" value="张三"></property>
+        <property name="age" value="20"></property>
+    </bean>
+
+    <!--构造器注入-->
+    <!--
+        1、参数 根据name属性名称对应
+        2、根据构造器index下标对应，默认不推荐
+        3、根据参数类型
+    -->
+    <bean id="user1" class="com.gabriel.entity.User">
+        <constructor-arg name="id" value="102"></constructor-arg>
+        <constructor-arg name="name" value="李四"></constructor-arg>
+        <constructor-arg name="age" value="30"></constructor-arg>
+    </bean>
+
+    <!--注意：如果有多个参数个数相同的构造器，默认会选择String的-->
+    <bean id="user2" class="com.gabriel.entity.User">
+        <constructor-arg index="0" value="103"></constructor-arg>
+        <constructor-arg index="1" value="王五"></constructor-arg>
+        <constructor-arg index="2" value="40"></constructor-arg>
+    </bean>
+
+    <bean id="user3" class="com.gabriel.entity.User">
+        <constructor-arg type="java.lang.Integer" value="104"></constructor-arg>
+        <constructor-arg type="java.lang.String" value="张六"></constructor-arg>
+        <constructor-arg type="java.lang.Integer" value="50"></constructor-arg>
+    </bean>
+
+    <!--静态工厂方法实例化bean-->
+    <bean id="bean2" class="com.gabriel.beanFactory.Bean2" factory-method="getInstance"></bean>
+
+    <!--实例工厂方法实例化bean-->
+    <bean id="beanFact" class="com.gabriel.beanFactory.Bean3Factory"></bean>
+    <bean id="bean3" class="com.gabriel.beanFactory.Bean3" factory-bean="beanFact" factory-method="createBean3"></bean>
+
+    <!--实例工厂方法注入日期-->
+    <bean id="date" class="java.text.SimpleDateFormat">
+        <constructor-arg name="pattern" value="yyy-MM-dd"></constructor-arg>
+    </bean>
+    <bean id="user4" class="com.gabriel.entity.User">
+        <property name="birth">
+            <bean factory-bean="date" factory-method="parse">
+                <constructor-arg value="2021-10-20"></constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+    <!--FactoryBean方式实例化bean-->
+    <bean id="bean4" class="com.gabriel.beanFactory.Bean4Factroy"></bean>
+
+    <!--bean的生命周期-->
+    <bean id="lifeCycle" class="com.gabriel.life.LifeCycle" init-method="init" destroy-method="destroy"></bean>
+
+    <!--后处理Bean（BeanPostProcessor接口）-->
+        <bean class="com.gabriel.myBeanPostProcessor.MyBeanPostProcessor"></bean>
+
+
+</beans>
