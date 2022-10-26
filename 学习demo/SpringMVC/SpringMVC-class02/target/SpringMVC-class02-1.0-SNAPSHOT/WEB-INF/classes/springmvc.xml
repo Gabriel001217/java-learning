@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--controller的扫描-->
+    <context:component-scan base-package="com.gabriel.controller"></context:component-scan>
+
+    <!--&lt;!&ndash;配置handlerMapping和handlerAdapter&ndash;&gt;-->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>-->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"></bean>-->
+
+    <!--注解驱动方式启动
+        取代上面的两个bean
+        并且可以将结果以默认形式转换后返回客户端
+    -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/page/"></property>
+        <property name="suffix"  value=".jsp"></property>
+    </bean>
+
+    <!--声明自定义的转换器-->
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.gabriel.convert.DateConvertor"></bean>
+            </set>
+        </property>
+    </bean>
+
+    <!--简单异常处理器-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <!--逻辑视图名-->
+                <prop key="java.lang.Exception">error</prop>
+                <prop key="java.lang.NullPointerException">null</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--上传解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10487566"></property>
+    </bean>
+
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/hello/*"/>
+            <mvc:exclude-mapping path="/hello/hello"></mvc:exclude-mapping>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

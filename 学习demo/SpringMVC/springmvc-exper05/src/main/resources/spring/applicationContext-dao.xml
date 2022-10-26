@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置数据库连接-->
+    <context:property-placeholder location="classpath:config/druid.properties"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="driverClassName" value="${druid.driverClass}"></property>
+        <property name="url" value="${druid.url}"></property>
+        <property name="username" value="${druid.username}"></property>
+        <property name="password" value="${druid.password}"></property>
+    </bean>
+
+    <!--配置sqlSessionFactory对象，将他交给spring管理-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--连接数据库-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--指定config文件的位置-->
+        <property name="configLocation" value="classpath:mybatis/mybatis.xml"></property>
+    </bean>
+
+    <!--配置mapper映射文件的扫描-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--&lt;!&ndash;注入，配置sqlSessionFactory对象&ndash;&gt;-->
+        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>-->
+        <!--指定需要扫描得包地址-->
+        <property name="basePackage" value="com.gabriel.mapper"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gabriel.mapper.UserMapper">
+    <insert id="addUser">
+        insert into user(username,realname,password,phone) values(#{username},#{realname},#{password},#{phone})
+    </insert>
+
+    <select id="queryUser" resultType="com.gabriel.pojo.User">
+        select * from user where username=#{username} and password=#{password}
+    </select>
+
+    <select id="queryAll" resultType="com.gabriel.pojo.User">
+        select * from user
+    </select>
+
+    <update id="updateUser">
+        update user set realname=#{realname},password=#{password},phone=#{phone} where username=#{username}
+    </update>
+
+    <delete id="delUser">
+        delete from user where username=#{username}
+    </delete>
+</mapper>
