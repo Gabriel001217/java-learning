@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			window.onload=function(){
+				var firstChk=document.getElementById("firstChk");
+				var aihaos=document.getElementsByName("aihao");
+				firstChk.onclick=function(){
+					//获取第一个复选框的选中状态
+					//根据name获取所有元素
+					//var aihaos=document.getElementsByName("aihao");
+					for(var i=0;i<aihaos.length;i++){
+						aihaos[i].checked=firstChk.checked;
+					}
+				}
+				
+				var all=aihaos.length;
+				for(var i=0;i<aihaos.length;i++){
+					aihaos[i].onclick=function(){
+						var checkedCount=0;
+						//总数量和选中数量一致时,第一个复选框选中
+						for(var i=0;i<aihaos.length;i++){
+							if(aihaos[i].checked){
+								checkedCount++;
+							}
+							firstChk.checked=(all==checkedCount);
+						}
+					}
+				}
+			}
+		</script>
+		<input type="checkbox" id="firstChk" /><br />
+		<input type="checkbox" name="aihao" value="smoke" />抽烟<br />
+		<input type="checkbox" name="aihao" value="drink" />喝酒<br />
+		<input type="checkbox" name="aihao" value="tt" />烫头<br />
+	</body>
+</html>

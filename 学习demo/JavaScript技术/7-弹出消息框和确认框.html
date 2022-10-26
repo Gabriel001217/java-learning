@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function del(){
+				var ok = window.confirm("确认删除数据吗？")
+				if(ok){
+					alert("delete data...");
+				}
+			}
+		</script>
+		<input type="button" value="弹出消息框" onclick="window.alert('消息框!')" />
+		<input type="button" value="弹出确认框" onclick="del()" />
+	</body>
+</html>

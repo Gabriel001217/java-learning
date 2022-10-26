@@ -1,0 +1,46 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <!--对标签库的配置-->
+    <tlib-version>1.0</tlib-version>
+    <short-name>ct</short-name>
+    <uri>http://www.gabriel.com/jsp/tags/custom</uri>
+
+    <!--注册标签-->
+    <tag>
+        <name>clientIp</name>
+        <tag-class>com.study.container.ClientIpTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <!--注册标签-->
+    <tag>
+        <name>lowerToUpper</name>
+        <tag-class>com.study.container.LowerToUpper</tag-class>
+        <!--
+            empty:表示当前标签没有标签体
+            scriptless:表示当前具有标签体，但该标签体中不能出现java脚本，但可以出现EL表达式
+            jsp:（已过时）表示当前标签具有标签体，将标签体内容原样显示到浏览器。
+            tagdependent:表示当前标签具有标签体，将标签体内容原样显示到浏览器，即使标签体中写的是EL，也不会对EL进行计算
+        -->
+        <body-content>scriptless</body-content>
+    </tag>
+
+    <tag>
+        <name>if</name>
+        <tag-class>com.study.container.IfTag</tag-class>
+        <body-content>tagdependent</body-content>
+        <attribute>
+            <name>test</name>
+            <required>true</required>
+            <!--
+                 runtime expression value
+                 若为true，则该属性的值支持EL表达式和JSP表达式
+            -->
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+</taglib>

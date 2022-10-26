@@ -1,0 +1,48 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>com.study.container.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>quitServlet</servlet-name>
+    <servlet-class>com.study.container.QuitServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>quitServlet</servlet-name>
+    <url-pattern>/quit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>kickServlet</servlet-name>
+    <servlet-class>com.study.container.KickServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>kickServlet</servlet-name>
+    <url-pattern>/kick</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>loginFilter</filter-name>
+    <filter-class>com.study.container.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginFilter</filter-name>
+    <url-pattern>/jsp/*</url-pattern>
+  </filter-mapping>
+  <listener>
+    <listener-class>com.study.container.OnlineUserListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>com.study.container.SessionAttributeListener</listener-class>
+  </listener>
+  <session-config>
+    <session-timeout>10</session-timeout>
+  </session-config>
+</web-app>

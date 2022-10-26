@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//创建JSON对象(JSON也可以称为无类型对象，轻量级，轻巧，体积小，易解析)
+			var studentObj = {
+				"sno":"110",
+				"sname":"张三",
+				"sex":"男"
+			};
+			
+			//访问json对象的属性
+			alert(studentObj.sno+"，"+studentObj.sname+"，"+studentObj.sex);
+			
+			//之前没有使用json的时候,定义类,创建对象,访问对象的属性
+			Student = function(sno,sname,sex){
+				this.sno=sno;
+				this.sname=sname;
+				this.sex=sex;
+			}
+			
+			var stu = new Student("111","李四","男");
+			alert(stu.sno+"，"+stu.sname+"，"+stu.sex);
+			
+			//JSON数组
+			var students = [
+				{"sno":"110","sname":"张三","sex":"男"},
+				{"sno":"120","sname":"李四","sex":"男"},
+				{"sno":"130","sname":"王五","sex":"男"}
+			];
+			
+			for(var i=0;i<students.length;i++){
+				var stuObj = students[i];
+				alert(stuObj.sno+"，"+stuObj.sname+"，"+stuObj.sex);
+			}
+		</script>
+	</body>
+</html>

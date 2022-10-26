@@ -1,0 +1,50 @@
+<!DOCTYPE web-app PUBLIC
+                "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+                "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+<display-name>Archetype Created Web Application</display-name>
+  <!--定义初始化参数-->
+  <context-param>
+    <param-name>name</param-name>
+    <param-value>zjk</param-value>
+  </context-param>
+  <context-param>
+    <param-name>address</param-name>
+    <param-value>ShangHai</param-value>
+  </context-param>
+
+  <!--注册servlet-->
+  <servlet>
+    <servlet-name>someServlet</servlet-name>
+    <servlet-class>com.myweb.container.SomeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>someServlet</servlet-name>
+    <url-pattern>/come</url-pattern>
+    <!--精确路径-->
+    <url-pattern>/xxx/yyy/zzz/come</url-pattern>
+    <!--通配符路径-->
+    <url-pattern>/come/*</url-pattern>
+    <!--全路径模式-->
+    <url-pattern>/*</url-pattern>
+    <url-pattern>/</url-pattern>
+    <!-- /*与/都是全路径模式，但他们还是有所不同的。
+         /*是真正的全路径模式，可以拦截所有请求，无论是动态资源请求，还是静态资源请求，均会拦截。
+         / 只会拦截静态资源请求，对于动态资源请求是不进行拦截的。
+     -->
+    <!--后缀路径模式-->
+    <url-pattern>*.do</url-pattern>
+    <!--会拦截所有以.do结尾的路径 -->
+  </servlet-mapping>
+
+  <!--注册servlet-->
+  <servlet>
+    <servlet-name>otherServlet</servlet-name>
+    <servlet-class>com.myweb.container.OtherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>otherServlet</servlet-name>
+    <url-pattern>/other</url-pattern>
+  </servlet-mapping>
+</web-app>
